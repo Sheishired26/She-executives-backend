@@ -7,13 +7,21 @@ import multer from "multer";
 dotenv.config();
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:8080",
+  "https://she-executives.netlify.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:8080", // 👈 ADD THIS
-      "https://she-executives.netlify.app",
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed"));
+      }
+    },
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -318,13 +326,22 @@ await transporter.sendMail({
       res.status(200).json({ success: true });
 
     } catch (error) {
-      console.error("❌ Error:", error);
-      res.status(500).json({ success: false });
-    }
+  console.error("❌ FULL ERROR:", error);
+
+  res.status(500).json({
+    success: false,
+    message: error.message, // 👈 IMPORTANT
+  });
+}
   }
 );
 
 // ✅ Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
+
+
+app.get("/", (req, res) => {
+  res.send("API running ✅");
 });
