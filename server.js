@@ -10,11 +10,15 @@ const app = express();
 console.log("🔥 BACKEND FILE IS RUNNING");
 
 /* ================= CORS ================= */
+app.use(cors({
+  origin: ["https://she-executives.netlify.app/"],
+}));
+
 const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:8080",
   "https://she-executives.netlify.app",
 ];
+
+const cors = require("cors");
 
 app.use(
   cors({
@@ -183,7 +187,7 @@ app.post(
           <div style="font-family: 'Segoe UI', Arial, sans-serif; background:#f8fafc; padding:40px 20px;">
             <div style="max-width:600px; margin:auto; background:white; border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
               <div style="background:linear-gradient(135deg,#0ea5e9,#0284c7); padding:20px; text-align:center;">
-                <img src="https://she-executives.vercel.app/She-logo.png" alt="She's Executives" style="height:60px; object-fit:contain;" />
+                <img src="https://she-executives.netlify.app/She-logo.png" alt="She's Executives" style="height:60px; object-fit:contain;" />
               </div>
               <div style="padding:32px;">
                 <p>Hi <b>${name}</b>,</p>
