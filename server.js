@@ -3,6 +3,9 @@ import nodemailer from "nodemailer";
 import cors from "cors";
 import dotenv from "dotenv";
 import multer from "multer";
+import dns from "dns";
+
+dns.setDefaultResultOrder("ipv4first"); // Force IPv4
 
 dotenv.config();
 
@@ -49,12 +52,12 @@ if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
 }
 
 const transporter = nodemailer.createTransport({
-host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // VERY IMPORTANT (false for 587)
+  host: "smtp.gmail.com",
+  port: 465, // SSL
+  secure: true, 
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    pass: process.env.EMAIL_PASS, // 16-digit App Password
   },
 });
 
