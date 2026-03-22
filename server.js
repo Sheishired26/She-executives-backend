@@ -18,7 +18,6 @@ const allowedOrigins = [
   "https://she-executives.netlify.app",
 ];
 
-const cors = require("cors");
 
 app.use(
   cors({
